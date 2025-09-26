@@ -1,62 +1,81 @@
-# automated-dog-door
+Perfect 👍 — here’s your README updated with a ready-to-display **dog image section**. I placed it after the **Overview** so it shows up near the top, and added a sample Markdown snippet pointing to `assets/my_dog.jpg`. Once you drop your image file in the repo, GitHub will automatically render it.
+
+---
 
 # Automated Dog Door
 
 ## Overview
-This project is an automated dog door designed to help manage access for dogs to go outside without leaving a door open all the time. The system uses dual cameras and object detection to recognize specific dogs and trigger a servo-powered door mechanism.
+
+This project is an automated dog door designed to let dogs go outside independently without leaving the door open. The system uses dual cameras, YOLO-based object detection, and servos to automatically open and close door panels when a dog is detected.
+
+## Meet the Dog
+
+Here’s one of the dogs this project was designed for:
+
+![My Dog](assets/detect_buster.jpg)
+
+*(To display your own image, place it inside an `assets/` folder in the repository and make sure the filename matches. GitHub will show the image automatically in the README.)*
 
 ## Motivation
-I have three dogs (two boxers and a Boston terrier), and my mom finds it difficult to let them out as often as needed for exercise. Leaving the door open for them is not ideal due to heating and air conditioning concerns. This system automates the process and ensures that only the dogs can trigger the door, improving security and efficiency.
+
+I have three dogs (two boxers and a Boston terrier), and my mom finds it difficult to let them out frequently. Leaving the door open wastes heating/cooling. This project automates the process, improves convenience, and ensures only the dogs can trigger the door.
 
 ## Features
-- Dual Raspberry Pi Camera Module 3 for indoor and outdoor object detection.
-- YOLOv8 object detection model to recognize only our dogs.
-- Motion-activated camera system using distance sensors to reduce power consumption.
-- Servo-driven door mechanism powered by a PCA9685 PWM controller for smooth, jitter-free operation.
-- Failsafe reconnect logic to handle temporary camera disconnections.
-- Automatic door opening and closing based on real-time detection.
 
-## Hardware Components
-- Raspberry Pi 5 (primary controller)
-- 4 x MG996R servos (for the door panels)
-- PCA9685 PWM driver (for better servo control, reducing jitter)
-- 2 x Raspberry Pi Camera Module 3 (for object detection)
-- 2 x HC-SR04 ultrasonic distance sensors (motion detection to activate cameras only when needed)
-- Custom power management board (to regulate and distribute power efficiently)
+* Dual Raspberry Pi Camera Module 3 for indoor/outdoor detection.
+* YOLOv8 object detection model with multiprocessing batch inference to leverage multiple CPU cores.
+* Motion-activated cameras using ultrasonic distance sensors to reduce power consumption.
+* Servo-driven door mechanism powered by a PCA9685 PWM controller for smooth operation.
+* Automatic recovery from temporary camera disconnections.
+* Power monitoring and usage tracking.
 
-## Software Stack
-- Python 3.11
-- OpenCV (for image processing and visualization)
-- YOLOv8 (Ultralytics) (for real-time object detection)
-- Picamera2 (for interfacing with Raspberry Pi cameras)
-- gpiozero (for distance sensor control)
-- Adafruit ServoKit (for controlling the PCA9685 PWM driver and servos)
+## Hardware
+
+* Raspberry Pi 5 (controller)
+* 4 × MG996R servos (door panels)
+* PCA9685 PWM driver
+* 2 × Raspberry Pi Camera Module 3
+* 2 × HC-SR04 ultrasonic distance sensors
+* Custom power management board
+
+## Software
+
+* Python 3.11
+* OpenCV (image processing)
+* YOLOv8 (Ultralytics)
+* Picamera2 (camera control)
+* gpiozero (sensor control)
+* Adafruit ServoKit (PWM servo control)
 
 ## Power Optimization
-To reduce unnecessary power consumption, the system only activates cameras when motion is detected within a certain range. Testing showed that this implementation saves about 20% more power compared to a system where cameras run continuously.
 
-## Installation & Setup
-1. Set up Raspberry Pi 5 with Raspberry Pi OS.
-2. Enable I2C and Camera interfaces from `raspi-config`.
-3. Create and activate a virtual environment:
+Cameras only activate when motion is detected. Testing shows ~20% less power usage compared to continuously running cameras.
+
+## Installation
+
+1. Set up Raspberry Pi OS and enable I2C + Camera (`raspi-config`).
+2. Create a virtual environment and install dependencies:
+
    ```sh
    python -m venv venv
    source venv/bin/activate
-   ```
-4. Install dependencies:
-   ```sh
    pip install opencv-python picamera2 ultralytics gpiozero adafruit-circuitpython-servokit
    ```
-5. Connect hardware components (PCA9685, servos, cameras, distance sensors).
-6. Run the main script inside the virtual environment:
+3. Connect hardware (servos, PCA9685, cameras, sensors).
+4. Run the main program:
+
    ```sh
    python automated_dog_door.py
    ```
 
-## Potential Improvements
-- Implement a user-friendly UI to adjust detection thresholds and sensitivity.
-- Add cloud-based monitoring to log usage and provide alerts.
-- Improve **detection robustness by using custom-trained YOLO models.
+## Ongoing Updates
 
+* Chose not to fully modularize into an OOP architecture due to the smaller scale of the project and to make a potential port to C for embedded devices easier.
+* Current code balances clarity with embedded-style simplicity.
 
+## Future Plans
+
+* Train and deploy a **custom TensorFlow Lite model** optimized for microcontrollers.
+* Explore switching from Raspberry Pi to an **STM32-based platform** for specialized embedded performance.
+* Add cloud-based logging and optional mobile monitoring.
 
