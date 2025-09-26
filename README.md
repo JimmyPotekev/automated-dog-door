@@ -1,7 +1,3 @@
-Perfect 👍 — here’s your README updated with a ready-to-display **dog image section**. I placed it after the **Overview** so it shows up near the top, and added a sample Markdown snippet pointing to `assets/my_dog.jpg`. Once you drop your image file in the repo, GitHub will automatically render it.
-
----
-
 # Automated Dog Door
 
 ## Overview
